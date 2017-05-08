@@ -7,6 +7,7 @@ require('sinatra/activerecord')
 require('rake')
 require('./lib/division')
 require('./lib/employee')
+require('./lib/project')
 also_reload('./**/*.rb')
 
 ENV['RACK_ENV'] = 'test'
@@ -14,6 +15,7 @@ ENV['RACK_ENV'] = 'test'
 get('/') do
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -26,6 +28,7 @@ post('/division/new') do
   new_division = Division.create({:name => name})
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -41,6 +44,7 @@ delete('/division/:id') do
   @division.delete()
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -57,6 +61,7 @@ patch('/division/rename/:id') do
   @division.update({:name => name})
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -71,12 +76,23 @@ post('/employee/new')do
   new_employee = Employee.create({:name => name, :division_id => division_id})
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
 get('/employee/:id')do
   id = params.fetch('id')
   @employee = Employee.find(id)
+  @projects = Project.all()
+  erb(:employee)
+end
+
+patch('/employee/:id') do
+  id = params.fetch('id')
+  project_id = params.fetch('project_id')
+  @employee = Employee.find(id)
+  @employee.update({:project_id => project_id})
+  @projects = Project.all()
   erb(:employee)
 end
 
@@ -86,6 +102,7 @@ delete('/employee/:id') do
   @employee.delete()
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -102,5 +119,56 @@ patch('/employee/rename/:id') do
   @employee.update({:name => name})
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
+end
+
+get('/project/new') do
+  erb(:project_form)
+end
+
+post('/project/new') do
+  project = params.fetch('name')
+  @project = Project.create({:name => project, :current_project => true })
+  @divisions = Division.all()
+  @employees = Employee.all()
+  @projects = Project.all()
+  erb(:index)
+end
+
+get('/project/:id') do
+  id = params.fetch('id')
+  @project = Project.find(id)
+  @employees = Employee.all()
+  erb(:project)
+end
+
+delete('/project/:id') do
+  id = params.fetch('id')
+  @project = Project.find(id)
+  @project.delete()
+  @divisions = Division.all()
+  @employees = Employee.all()
+  @projects = Project.all()
+  erb(:index)
+end
+
+patch('/project/:id') do
+  id = params.fetch('id')
+  employee_id = params.fetch('employee_id')
+  @project = Project.find(id)
+  @employee = Employee.find(employee_id)
+  @employee.update(:project_id => @project.id())
+  @employees = Employee.all()
+  erb(:project)
+end
+
+patch('/project/employee/remove/:id') do
+  id = params.fetch('id')
+  @project = Project.find(id)
+  employee_id = params.fetch('remove_employee_id')
+  @employee = Employee.find(employee_id)
+  @employee.update(:project_id => nil)
+  @employees = Employee.all()
+  erb(:project)
 end

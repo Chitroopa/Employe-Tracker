@@ -1,5 +1,6 @@
-<h3><a href="/division/new">Add new Division</a></h3><br>
-<h3><a href="/employee/new">Add new Employee</a></h3><br>
+<h3><a href="/division/new">Add new Division</a></h3>
+<h3><a href="/employee/new">Add new Employee</a></h3>
+<h3><a href="/project/new">Add new Project</a></h3><br>
 
 <h4>Here are the list of divisions</h4>
 <% if @divisions.any?() %>
@@ -21,4 +22,15 @@
   </ul>
 <% else %>
   <h4>No employees yet</h4>
+<% end %>
+
+<h4>Here are projects</h4>
+<% if @projects.any?() %>
+  <ul>
+    <% @projects.current_project().each() do |project| %>
+      <li><a href="/project/<%= project.id() %>"><%= project.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No projects yet</h4>
 <% end %>

@@ -1,0 +1,46 @@
+<form action="/project/<%= @project.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <h1><%= @project.name() %></h1>
+  <h1>Select employee to assign to this project</h1>
+  <select id='employee_id' name='employee_id' type='text'>
+    <% @employees.each() do |employee| %>
+      <option value="<%= employee.id()%>"> <%= employee.name() %> </option>
+    <% end %>
+  </select>
+  <button class = "btn btn-warning active" type="submit">Update</button>
+</form>
+
+<form action="/project/employee/remove/<%= @project.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <h4>Select employee to remove to this project</h4>
+  <select id='remove_employee_id' name='remove_employee_id' type='text'>
+    <% @project.employees().each() do |employee| %>
+      <option value="<%= employee.id()%>"> <%= employee.name() %> </option>
+    <% end %>
+  </select>
+  <button class = "btn btn-warning active" type="submit">Remove</button>
+</form>
+
+<% if @project.employees().any?() %>
+  <h4>Here are the list of employees for this project</h4>
+  <ul>
+    <% @project.employees().each() do |employee| %>
+      <li><a href="/employee/<%= employee.id() %>"><%= employee.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No employees yet</h4>
+<% end %>
+
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/" class = "btn btn-success active" role = "button">Home</a>
+  </div>
+  <div class="col-md-2">
+    <form class="/project/<%= @project.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class = "btn btn-danger active" type="submit">Delete <%= @project.name() %></button>
+    </form>
+  </div>
+</div>

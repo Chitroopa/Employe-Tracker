@@ -6,6 +6,23 @@
 <% else %>
   <h3>Not assigned to any division</h3>
 <% end %>
+<% if @employee.project() != nil %>
+  <h3>Project name: <a href="/project/<%= @employee.project().id() %>"><%= @employee.project().name() %></a></h3>
+
+<% else %>
+  <h3>Not assigned to any project</h3>
+<% end %>
+<form action="/employee/<%= @employee.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <h1>Select project to assign to this employee</h1>
+  <select id='project_id' name='project_id' type='text'>
+    <% @projects.each() do |project| %>
+      <option value="<%= project.id()%>"> <%= project.name() %> </option>
+    <% end %>
+  </select>
+  <button class = "btn btn-warning active" type="submit">Update</button>
+</form>
+
 <div class="row">
   <br>
   <div class="col-md-2">

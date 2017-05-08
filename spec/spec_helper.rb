@@ -3,6 +3,7 @@ require('pg')
 require("sinatra/activerecord")
 require('division')
 require('employee')
+require('project')
 
 ENV['RACK_ENV'] = 'test'
 
@@ -13,6 +14,9 @@ RSpec.configure do |config|
     end
     Employee.all().each() do |employee|
       employee.destroy()
+    end
+    Project.all().each() do |project|
+      project.destroy()
     end
   end
 end
