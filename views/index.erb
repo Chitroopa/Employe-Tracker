@@ -1,0 +1,13 @@
+<h3><a href="/division/new">Add new Division</a></h3><br>
+<h3><a href="/employee/new">Add new Employee</a></h3><br>
+
+<h4>Here are the list of divisions</h4>
+<% if @divisions.any?() %>
+  <ul>
+    <% @divisions.each() do |division| %>
+      <li><a href="/division/<%= division.id() %>"><%= division.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No divisions yet</h4>
+<% end %>

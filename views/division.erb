@@ -1,0 +1,29 @@
+<h1><%= @division.name() %></h1>
+<% if @division.employees().any?() %>
+  <h4>Here are the list of employees for this division</h4>
+  <ul>
+    <% @division.employees().each() do |employee| %>
+      <li><%= employee.name() %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No employees yet</h4>
+<% end %>
+
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/" class = "btn btn-success active" role = "button">Home</a>
+  </div>
+  <div class="col-md-3">
+    <form action="/division/rename/<%= @division.id() %>" method="post">
+      <button class = "btn btn-warning active" type="submit">Rename <%= @division.name() %></button>
+    </form>
+  </div>
+  <div class="col-md-2">
+    <form class="/division/<%= @division.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class = "btn btn-danger active" type="submit">Delete <%= @division.name() %></button>
+    </form>
+  </div>
+</div>
