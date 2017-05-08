@@ -1,0 +1,22 @@
+<h1>Employee Info</h1>
+<h3>Employee name: <%= @employee.name() %></h3>
+<h3>Division name: <%= @employee.division().name() %></h3>
+
+
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/" class = "btn btn-success active" role = "button">Home</a>
+  </div>
+  <div class="col-md-3">
+    <form action="/employee/rename/<%= @employee.id() %>" method="post">
+      <button class = "btn btn-warning active" type="submit">Rename <%= @employee.name() %></button>
+    </form>
+  </div>
+  <div class="col-md-2">
+    <form class="/employee/<%= @employee.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class = "btn btn-danger active" type="submit">Delete <%= @employee.name() %></button>
+    </form>
+  </div>
+</div>

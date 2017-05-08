@@ -13,6 +13,7 @@ ENV['RACK_ENV'] = 'test'
 
 get('/') do
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
 end
 
@@ -24,6 +25,7 @@ post('/division/new') do
   name = params.fetch('name')
   new_division = Division.create({:name => name})
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
 end
 
@@ -38,6 +40,7 @@ delete('/division/:id') do
   @division = Division.find(id)
   @division.delete()
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
 end
 
@@ -53,5 +56,26 @@ patch('/division/rename/:id') do
   @division = Division.find(id)
   @division.update({:name => name})
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
+end
+
+get('/employee/new') do
+  @divisions = Division.all()
+  erb(:employee_form)
+end
+
+post('/employee/new')do
+  name = params.fetch('name')
+  division_id = params.fetch('division_id')
+  new_employee = Employee.create({:name => name, :division_id => division_id})
+  @divisions = Division.all()
+  @employees = Employee.all()
+  erb(:index)
+end
+
+get('/employee/:id')do
+  id = params.fetch('id')
+  @employee = Employee.find(id)
+  erb(:employee)
 end

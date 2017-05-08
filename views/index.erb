@@ -11,3 +11,14 @@
 <% else %>
   <h4>No divisions yet</h4>
 <% end %>
+
+<h4>Here are employees</h4>
+<% if @employees.any?() %>
+  <ul>
+    <% @employees.each() do |employee| %>
+      <li><a href="/employee/<%= employee.id() %>"><%= employee.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No employees yet</h4>
+<% end %>
