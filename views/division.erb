@@ -3,7 +3,7 @@
   <h4>Here are the list of employees for this division</h4>
   <ul>
     <% @division.employees().each() do |employee| %>
-      <li><%= employee.name() %></li>
+      <li><a href="/employee/<%= employee.id() %>"><%= employee.name() %></a></li>
     <% end %>
   </ul>
 <% else %>

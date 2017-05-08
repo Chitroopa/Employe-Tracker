@@ -1,8 +1,11 @@
 <h1>Employee Info</h1>
 <h3>Employee name: <%= @employee.name() %></h3>
-<h3>Division name: <%= @employee.division().name() %></h3>
+<% if @employee.division() != nil %>
+  <h3>Division name: <a href="/division/<%= @employee.division().id() %>"><%= @employee.division().name() %></a></h3>
 
-
+<% else %>
+  <h3>Not assigned to any division</h3>
+<% end %>
 <div class="row">
   <br>
   <div class="col-md-2">

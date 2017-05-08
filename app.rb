@@ -79,3 +79,28 @@ get('/employee/:id')do
   @employee = Employee.find(id)
   erb(:employee)
 end
+
+delete('/employee/:id') do
+  id = params.fetch('id')
+  @employee = Employee.find(id)
+  @employee.delete()
+  @divisions = Division.all()
+  @employees = Employee.all()
+  erb(:index)
+end
+
+post('/employee/rename/:id') do
+  id = params.fetch('id')
+  @employee = Employee.find(id)
+  erb(:employee_rename_form)
+end
+
+patch('/employee/rename/:id') do
+  id = params.fetch('id')
+  @employee = Employee.find(id)
+  name = params.fetch('name')
+  @employee.update({:name => name})
+  @divisions = Division.all()
+  @employees = Employee.all()
+  erb(:index)
+end
